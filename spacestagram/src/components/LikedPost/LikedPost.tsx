@@ -1,5 +1,5 @@
-import { Card, Col, Row, Button, Empty } from "antd";
-import { DeleteOutlined } from "@ant-design/icons";
+import { Card, Col, Row, Button, Empty, message } from "antd";
+import { DeleteOutlined, CopyOutlined } from "@ant-design/icons";
 import { useState, useEffect } from "react";
 
 const LikedPost = () => {
@@ -31,6 +31,11 @@ const LikedPost = () => {
     }
   };
 
+  const handleCopyToClipboard = (url: string) => {
+    navigator.clipboard.writeText(url);
+    message.success("Successfully copied 😃");
+  };
+
   return (
     <div style={{ overflowY: "scroll", height: "100vh" }}>
       {data.length === 0 && <Empty description="You don't have any liked posts" />}
@@ -38,13 +43,13 @@ const LikedPost = () => {
         {data.map((result, idx) => {
           if (result["media_type"] !== "image") return;
           return (
-            <Col key={idx} span={8}>
+            <Col className="gutter-row" key={idx} xs={{ span: 24 }} md={{ span: 12 }} lg={{ span: 8 }}>
               <Card
                 key={idx}
-                style={{ width: 300 }}
+                style={{ width: 400 }}
                 cover={<img alt={result["title"]} src={result["url"]} />}
                 title={result["title"]}
-                actions={[<DeleteOutlined onClick={() => handleRemovePost(result["title"])} />]}
+                actions={[<DeleteOutlined onClick={() => handleRemovePost(result["title"])} />, <CopyOutlined onClick={() => handleCopyToClipboard(result["url"])} />]}
               >
                 {expandRead[result.title] ? result["explanation"] : `${result["explanation"].slice(0, 500)}...`}
                 <br />

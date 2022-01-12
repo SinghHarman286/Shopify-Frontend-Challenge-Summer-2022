@@ -1,6 +1,6 @@
 import React, { useState, useEffect, useCallback } from "react";
-import { Card, Col, Row, Button, Skeleton, notification } from "antd";
-import { HeartTwoTone } from "@ant-design/icons";
+import { Card, Col, Row, Button, Skeleton, message } from "antd";
+import { HeartTwoTone, CopyOutlined } from "@ant-design/icons";
 import axios from "axios";
 
 const Home: React.FC = () => {
@@ -11,13 +11,6 @@ const Home: React.FC = () => {
   const [likedPost, setLikedPost] = useState(JSON.parse(localStorage.getItem("likedPost") || "{}") as Record<string, ApiData & { liked: boolean }>);
   const [isLoading, setIsLoading] = useState(false);
   const { Meta } = Card;
-
-  const openNotification = () => {
-    notification.info({
-      message: "Warning",
-      description: "If the data is not loading, then its an error with the API. I have noticed that sometimes API times out. In this scenario, please refresh the page and try again :)",
-    });
-  };
 
   const getStartAndEndDates = (counter: number): string[] => {
     const DATEGAP = 10;
@@ -32,10 +25,9 @@ const Home: React.FC = () => {
 
   const fetchRequest = useCallback(async () => {
     const [endDate, startDate] = getStartAndEndDates(currentCounter);
-    if (currentCounter === 0) openNotification();
     try {
       setIsLoading(true);
-      const response = await axios.get(`https://api.nasa.gov/planetary/apod?api_key=SZJt1mvKDC4CIcqi6oZLh1PjgaVjzHBxypKRlHnE&end_date=${endDate}&start_date=${startDate}`);
+      const response = await axios.get(`https://api.nasa.gov/planetary/apod?api_key=${process.env.REACT_APP_API_KEY}&end_date=${endDate}&start_date=${startDate}`);
       setData((prevData) => [...prevData, ...response.data]);
       let readObj: Record<string, boolean> = {};
       response.data.forEach((res: ApiData) => {
@@ -75,9 +67,25 @@ const Home: React.FC = () => {
     } else {
       liked = true;
     }
-    localStorage.setItem("likedPost", JSON.stringify({ ...prevLikedPost, [title]: { ...post, liked } }));
-    setLikedPost((prevState) => ({ ...prevState, [title]: { ...post, liked } }));
+    if (!liked) {
+      delete prevLikedPost[title];
+      localStorage.setItem("likedPost", JSON.stringify(prevLikedPost));
+      setLikedPost((prevState) => {
+        let newState = prevState;
+        delete newState[title];
+        return { ...newState };
+      });
+    } else {
+      localStorage.setItem("likedPost", JSON.stringify({ ...prevLikedPost, [title]: { ...post, liked } }));
+      setLikedPost((prevState) => ({ ...prevState, [title]: { ...post, liked } }));
+    }
   };
+
+  const handleCopyToClipboard = (url: string) => {
+    navigator.clipboard.writeText(url);
+    message.success("Successfully copied 😃");
+  };
+
   return (
     <div style={{ overflowY: "scroll", height: "100vh" }} onScroll={handleOnScroll}>
       <Row>
@@ -87,15 +95,12 @@ const Home: React.FC = () => {
             <Col className="gutter-row" key={idx} xs={{ span: 24 }} md={{ span: 12 }} lg={{ span: 8 }}>
               <Card
                 key={idx}
-                style={{ width: 300 }}
+                style={{ width: 400 }}
                 cover={<img alt={result["title"]} src={result["url"]} />}
                 title={result["title"]}
                 actions={[
-                  <HeartTwoTone
-                    onClick={() => handleLikedPost(result)}
-                    style={{ animation: "pulse .5s" }}
-                    twoToneColor={likedPost && likedPost[result["title"]] && likedPost[result["title"]].liked ? "red" : "#BFBFBF"}
-                  />,
+                  <HeartTwoTone onClick={() => handleLikedPost(result)} style={{ animation: "pulse .5s" }} twoToneColor={likedPost && likedPost[result["title"]] ? "red" : "#BFBFBF"} />,
+                  <CopyOutlined onClick={() => handleCopyToClipboard(result["url"])} />,
                 ]}
               >
                 {expandRead[result.title] ? result["explanation"] : `${result["explanation"].slice(0, 500)}...`}
