@@ -13,7 +13,7 @@ const Wrapper: React.FC<{ handleMenuChange({ key }: { key: string }): void }> = 
           <RocketOutlined style={{ color: "white", fontSize: "3em" }} />
           <span style={{ color: "white", fontSize: "2em" }}>Spacestagram</span>
         </div>
-        <Menu style={{ float: "right" }} theme="dark" mode="horizontal" defaultSelectedKeys={["1"]} onClick={handleMenuChange}>
+        <Menu style={{ float: "right", marginRight: "20px" }} theme="dark" mode="horizontal" defaultSelectedKeys={["1"]} onClick={handleMenuChange}>
           <Menu.Item key="1">
             <HomeFilled /> Home{" "}
           </Menu.Item>
