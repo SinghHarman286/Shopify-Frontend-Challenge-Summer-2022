@@ -3,6 +3,8 @@ Hi there, this is my submission for the [Shopify Summer Frontend Developer Chall
 
 ## The app is deployed at https://spacestagram-shopify-harman.herokuapp.com/
 #### :warning: Since I am using free version of Heroku, It might take some time to load the app. Thank you for your patience!
+#### ❗ In case of an API Failure, please view the demo attached below
+
 
 ## Tech Stack:
 - React.JS
@@ -21,6 +23,12 @@ Hi there, this is my submission for the [Shopify Summer Frontend Developer Chall
 
 ## :warning: Warnings:
 1. During my time testing the [NASA API](https://api.nasa.gov), I noticed that the API is occassionally non-functional (especially during the evening time). In order to handle the failure, the app shows an alert and reloads the page in order to make network request again
+
+
+## Project Demo (in case of an API failure)
+
+
+https://user-images.githubusercontent.com/67038446/150072897-248511be-9a34-4fba-9b30-4eb6eff9920e.mov
 
 
 Thanks for taking the time to view my project :))
