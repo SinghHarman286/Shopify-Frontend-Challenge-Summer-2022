@@ -1,49 +1,26 @@
-# Site is live at
-https://spacestagram-shopify-harman.herokuapp.com/
+# Shopify Frontend Challenge Summer 2022
+Hi there, this is my submission for the [Shopify Summer Frontend Developer Challenge](https://www.shopify.ca/careers/frontend-developer-intern-summer-2022-remote-us-canada_e4d4fb64-21c6-421c-b889-a51195090d5b)
 
-# Getting Started with Create React App
+## The app is deployed at https://spacestagram-shopify-harman.herokuapp.com/
+#### :warning: Since I am using free version of Heroku, It might take some time to load the app. Thank you for your patience!
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+## Tech Stack:
+- React.JS
+- TypeScript
+- Ant Design
 
-## Available Scripts
+## Features
+### This app has following features:
+1. **Infinite scroll**: Uses [NASA API](https://api.nasa.gov) and fetches 10 images at a time in chronological order enabling infinite scroll
+2. **Display descriptive data**: Displays resulting images with their description, and date in a reusable card with the feature of "Read-More/Read-Less"
+3. **Liking and Unliking images**: Provides a button (i.e. heart button) for users to like or dislike an image. The button turns "pink" when user likes the image and turns grey (default) when user unlikes the image
+4. **Storing Liked Posts**: Utilises localStorage in order to save the images liked even if the page is reloaded
+5. **Liked Post Page**: Displays all the liked images with an additional functionality to remove the image from liked post page (same as unliking the image from the home page)
+6. **Copying URL**: Each image has a "copy button" which copies the image url to clipboard
+7. **Loading screen**: An animated card skeleton appears as a loading screen while making the network request to NASA API
 
-In the project directory, you can run:
+## :warning: Warnings:
+1. During my time testing the [NASA API](https://api.nasa.gov), I noticed that the API is occassionally non-functional (especially during the evening time). In order to handle the failure, the app shows an alert and reloads the page in order to make network request again
 
-### `npm start`
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in the browser.
-
-The page will reload if you make edits.\
-You will also see any lint errors in the console.
-
-### `npm test`
-
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
-
-### `npm run build`
-
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
-
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
-
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
-
-### `npm run eject`
-
-**Note: this is a one-way operation. Once you `eject`, you can’t go back!**
-
-If you aren’t satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
-
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you’re on your own.
-
-You don’t have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn’t feel obligated to use this feature. However we understand that this tool wouldn’t be useful if you couldn’t customize it when you are ready for it.
-
-## Learn More
-
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
-
-To learn React, check out the [React documentation](https://reactjs.org/).
+Thanks for taking the time to view my project :))
