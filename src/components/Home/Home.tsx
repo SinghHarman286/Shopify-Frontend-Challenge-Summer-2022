@@ -103,6 +103,7 @@ const Home: React.FC = () => {
                   <CopyOutlined onClick={() => handleCopyToClipboard(result["url"])} />,
                 ]}
               >
+                <Meta description={result["date"]} />
                 {expandRead[result.title] ? result["explanation"] : `${result["explanation"].slice(0, 500)}...`}
                 <br />
                 <Button style={{ marginTop: "5px" }} onClick={() => handleExpandRead(result.title)}>

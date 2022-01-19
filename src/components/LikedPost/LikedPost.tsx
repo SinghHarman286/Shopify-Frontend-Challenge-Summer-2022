@@ -6,6 +6,7 @@ const LikedPost = () => {
   type PostData = { date: string; explanation: string; media_type: string; title: string; url: string; copyright: string; hdurl: string; service_version: string; liked: boolean };
   const [data, setData] = useState<PostData[]>(Object.values(JSON.parse(localStorage.getItem("likedPost") || "{}")));
   const [expandRead, setExpandRead] = useState({} as Record<string, boolean>);
+  const { Meta } = Card;
 
   useEffect(() => {
     const posts: PostData[] | null = Object.values(JSON.parse(localStorage.getItem("likedPost") || "{}"));
@@ -51,6 +52,7 @@ const LikedPost = () => {
                 title={result["title"]}
                 actions={[<DeleteOutlined onClick={() => handleRemovePost(result["title"])} />, <CopyOutlined onClick={() => handleCopyToClipboard(result["url"])} />]}
               >
+                <Meta description={result["date"]} />
                 {expandRead[result.title] ? result["explanation"] : `${result["explanation"].slice(0, 500)}...`}
                 <br />
                 <Button style={{ marginTop: "5px" }} onClick={() => handleExpandRead(result.title)}>
